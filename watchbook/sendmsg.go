@@ -11,7 +11,7 @@ func SendSubMessage(lastBook *zhwatch.BookInfo, alreadySend, avUsers map[string]
 		select {
 		case book := <-bookChan:
 			if lastBook == nil || book.Index != lastBook.Index {
-				lastBook = book
+				*lastBook = *book
 				client.SetLastBook(lastBookKey, book)
 				alreadySend = make(map[string]bool)
 				client.Del(alreadyKey)
