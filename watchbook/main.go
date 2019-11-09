@@ -33,8 +33,8 @@ func main() {
 	//> 书籍队列
 	bookChan := make(chan *zhwatch.BookInfo)
 	//> 最新一章的书籍
-	var lastBook *zhwatch.BookInfo
-	client.GetLastBook(lastBookKey, lastBook)
+	lastBook :=zhwatch.BookInfo
+	client.GetLastBook(lastBookKey, &lastBook)
 	//> 新增订阅用户
 	recvUsrChan := make(chan *wxpush.RecvUserData)
 
@@ -43,10 +43,10 @@ func main() {
 	//> 获取书籍
 	go QueryBookInfo(bookChan)
 	//> 发送书籍信息
-	go SendSubMessage(lastBook, alreadySend, allUsers, bookChan, client)
+	go SendSubMessage(&lastBook, alreadySend, allUsers, bookChan, client)
 	//> 监听关注用户
-	go OnUserSub(lastBook, alreadySend, allUsers, recvUsrChan, client)
-	log.Println("Server Start....")
+	go OnUserSub(&lastBook, alreadySend, allUsers, recvUsrChan, client)
+	log.Println("Server Start....lastBook ",lastBook)
 	//> 开启监听
 	wxpush.ServerAndListen(recvUserPort, recvUsrChan)
 }

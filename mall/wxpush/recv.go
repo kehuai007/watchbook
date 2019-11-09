@@ -27,23 +27,34 @@ func (r *RecvUserData) GetUid() string {
 func ServerAndListen(port int, c chan<- *RecvUserData) error {
 
 	recvHandle := func(w http.ResponseWriter, req *http.Request) {
-		s, err := ioutil.ReadAll(req.Body)
-		if err != nil {
-			log.Println("read body err ", err)
-			w.WriteHeader(http.StatusBadRequest)
+		switch req.Method {
+		case http.MethodGet:
+			w.Write([]byte("Server is Running"))
+			w.WriteHeader(http.StatusOK)
+		case http.MethodPost:
+			s, err := ioutil.ReadAll(req.Body)
+			if err != nil {
+				log.Println("read body err ", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			r := RecvUserData{}
+			err = json.Unmarshal(s, &r)
+			if err != nil {
+				log.Println("Unmarshal err ", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			go func() {
+				c <- &r
+			}()
+			w.WriteHeader(http.StatusOK)
+			return
+		default:
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		r := RecvUserData{}
-		err = json.Unmarshal(s, &r)
-		if err != nil {
-			log.Println("Unmarshal err ", err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		go func() {
-			c <- &r
-		}()
-		w.WriteHeader(http.StatusOK)
+
 	}
 	http.HandleFunc("/", recvHandle)
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
