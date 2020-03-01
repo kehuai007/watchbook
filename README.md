@@ -1,4 +1,21 @@
 # watchbook
-《逆天邪神》更新通知服务 
+《逆天邪神》《仙子请自重》更新通知服务 ！微信扫下面的二维码（加载显示出来可能有点慢）分别关注即可！
 
-![微信扫码关注逆天邪神最新更新通知~](http://wxpusher.zjiecode.com/api/qrcode/kdWQKnuU5keRoz0IYjDSeyJgzLLCE1YUDQhFI9gQOGb3cIxc9MjxF1NAFLXS5Ctd.jpg)
+```shell
+git clone https://github.com/kehuai007/watchbook.git
+```
+逆天邪神  
+
+
+![微信扫码关注逆天邪神最新更新通知~](http://kehuai.club:8084/pic/qrcode/ntxs.png)
+
+
+仙子请自重  
+
+
+![微信扫码关注仙子请自重最新更新通知~](http://kehuai.club:8084/pic/qrcode/xqzz.png)
+
+斗罗大陆IV终极斗罗 
+
+
+![微信扫码关注斗罗大陆IV终极斗罗最新更新通知~](http://kehuai.club:8084/pic/qrcode/zjdl.png)

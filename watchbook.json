@@ -1,0 +1,26 @@
+{
+  "qidian": [{
+    "book_url": "https://book.qidian.com/info/1013406185",
+    "name": "斗罗大陆IV终极斗罗",
+    "book_id": 1013406185,
+    "push_token": "AT_giQ0ST6qD42ek6mE3WME9RgXENXVlofa",
+    "loop_period": 5
+  },
+    {
+      "type": "qidian",
+      "book_url": "https://book.qidian.com/info/1014243481",
+      "name": "仙子请自重",
+      "book_id": 1014243481,
+      "push_token": "AT_qwSqVjv6ovifWbbaRQvKq2QThCfSAtA3",
+      "loop_period": 5
+    }
+  ],
+  "zongheng": [{
+    "type": "zongheng",
+    "book_url": "http://book.zongheng.com/book/408586.html",
+    "name": "逆天邪神",
+    "book_id": 408586,
+    "push_token": "AT_z8flfbk6jDrq6VffxVzExJQgXVm6ukYT",
+    "loop_period": 5
+  }]
+}
