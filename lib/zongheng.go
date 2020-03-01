@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 const _zhegx = `<div class="tit"><a href="http://book.zongheng.com/chapter/([\d]+)/([\d]+).html" target="_blank" data-sa-d='{"page_module":"bookDetail","click_name":"newestChapter","book_id":"[\d]+"}'>(.+)</a><em></em></div>`
@@ -37,6 +38,21 @@ func (z ZoneHen) Parse() (book *Book, err error) {
 	}
 	book.BookId, _ = strconv.Atoi(string(match[1]))
 	book.ChapterId, _ = strconv.Atoi(string(match[2]))
+	book.Text = getZhBookText(book.Url)
 	fmt.Println(book)
 	return
+}
+func getZhBookText(url string) string {
+	text,err := get(url)
+	if err != nil {
+		return "..."
+	}
+	match := regexp.MustCompile(`<p>(.+)<p>(.+)</p>`).FindSubmatch(text)
+	if len(match) > 0 {
+		t := strings.Replace(string(match[0]), "<p>　　", "", -1)
+		t = strings.Replace(t, "<p>", "", -1)
+		t = strings.Replace(t, "</p>", "", -1)
+		return t
+	}
+	return "..."
 }

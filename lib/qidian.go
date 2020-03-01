@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 const _qdegx = `<a class="blue" href="//(.+)" data-eid="qd_G19" data-cid="//vipreader.qidian.com/chapter/([\d]+)/([\d]+)" title="(.+)" target="_blank">.+</a><i>`
-
+const _qdegxtext =`<p>(.+)<p>(.+)`
 var regqdBook = regexp.MustCompile(_qdegx)
-
+var regqdText = regexp.MustCompile(_qdegxtext)
 type QiDian struct {
 	BookRequest
 }
@@ -31,12 +32,29 @@ func (q QiDian) Parse() (book *Book, err error) {
 		return nil, errors.New("match failed")
 	}
 	book = &Book{
-		Title: string(match[4]),
+		Title: strings.TrimSpace(string(match[4])),
 		Url:   "https://" + string(match[1]),
-		Name:  q.Name,
+		Name:  strings.TrimSpace(q.Name),
 	}
 	book.BookId, _ = strconv.Atoi(string(match[2]))
 	book.ChapterId, _ = strconv.Atoi(string(match[3]))
+	book.Text = getQdBookText(book.Url)
 	fmt.Println(book)
 	return
+}
+func getQdBookText(url string) string  {
+	text,err := get(url)
+	if err != nil {
+		return "..."
+	}
+	match := regqdText.FindSubmatch(text)
+	if len(match) == 0{
+		match = regexp.MustCompile(`<p>(.+)<p>`).FindSubmatch(text)
+	}
+	if len(match) > 0 {
+		t := strings.Replace(string(match[0]), "<p>　　", "", -1)
+		t = strings.Replace(t, "<p>", "", -1)
+		return t+"..."
+	}
+	return "..."
 }

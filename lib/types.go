@@ -51,6 +51,7 @@ type Book struct {
 	Title     string `json:"title"`
 	Url       string `json:"url"`
 	Name      string `json:"name"`
+	Text      string `json:"text"`
 }
 type Parser interface {
 	Parse() (*Book, error)

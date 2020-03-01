@@ -3,10 +3,9 @@ package server
 import (
 	"bytes"
 	"fmt"
+	"github.com/kehuai007/wxpush"
 	"log"
 	"misu/watchbook/lib"
-
-	"github.com/kehuai007/wxpush"
 )
 
 type (
@@ -46,12 +45,13 @@ func (s *Server) PushRequest(req lib.WatchBookServer, appToken string, minute in
 		minInterval: minute,
 	})
 }
+
 func (s *Server) SendMsg(book *lib.Book, r request) {
 	if book != nil && len(r.useList) <= 0 {
 		return
 	}
 	msg := wxpush.NewMessage(r.appToken)
-	msg.SetContent(fmt.Sprintf("《%s》更新啦！最新 %s。", book.Name, book.Title))
+	msg.SetContent(fmt.Sprintf("《%s》更新《%s》\r\n %s", book.Name, book.Title,book.Text))
 	msg.SetUrl(book.Url)
 	for u, _ := range r.useList {
 		msg.AddUId(u)

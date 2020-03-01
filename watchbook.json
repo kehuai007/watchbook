@@ -7,7 +7,6 @@
     "loop_period": 5
   },
     {
-      "type": "qidian",
       "book_url": "https://book.qidian.com/info/1014243481",
       "name": "仙子请自重",
       "book_id": 1014243481,
@@ -16,7 +15,6 @@
     }
   ],
   "zongheng": [{
-    "type": "zongheng",
     "book_url": "http://book.zongheng.com/book/408586.html",
     "name": "逆天邪神",
     "book_id": 408586,
